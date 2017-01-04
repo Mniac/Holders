@@ -1,4 +1,4 @@
-import javax.swing.JOptionPane;
+package com.example.zeroc.holders;
 
 public class Inicio implements  java.io.Serializable{
 
@@ -17,15 +17,16 @@ public class Inicio implements  java.io.Serializable{
 		texto = texto.replace("___ciudad___", this.ciudad);
 		texto = texto.replace("___pais___", this.pais);
 		if(this.institucion)
-			texto = texto.replace("___lugar___", "institución mental");
+			texto = texto.replace("___lugar___", "instituciÃ³n mental");
 		else
-			texto = texto.replace("___lugar___", "centro de reinserción social");
+			texto = texto.replace("___lugar___", "centro de reinserciÃ³n social");
 		texto = texto.replace("___ciudad___",this.ciudad);
 		texto = texto.concat(this.holder+".");
 	}
 	
 	
 	public void ejecutar(){
+
 		JOptionPane.showMessageDialog(null, texto);
 	}
 }

@@ -1,6 +1,7 @@
+package com.example.zeroc.holders;
+
 import java.io.*;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class Historia implements  java.io.Serializable{
 	
@@ -49,13 +50,13 @@ public class Historia implements  java.io.Serializable{
 	}
 	
 	public void read() throws IOException, ClassNotFoundException {
-		//Creamos un fujo de entrada a disco, pasándole el nombre del archivo en disco o un objeto de la clase File.
+		//Creamos un fujo de entrada a disco, pasï¿½ndole el nombre del archivo en disco o un objeto de la clase File.
         FileInputStream fileIn=new FileInputStream(titulo+".holder");
         
 		//El fujo de entrada ObjectInputStream es el que procesa los datos y se ha de vincular a un objeto fileIn de la clase FileInputStream.
         ObjectInputStream entrada=new ObjectInputStream(fileIn);
         
-        //El método readObject lee los objetos del flujo de entrada, en el mismo orden en el que ha sido escritos.
+        //El mï¿½todo readObject lee los objetos del flujo de entrada, en el mismo orden en el que ha sido escritos.
         Historia h1 = null;
         Object aux = entrada.readObject();
         if( aux instanceof Historia){
@@ -73,13 +74,13 @@ public class Historia implements  java.io.Serializable{
         entrada.close();
 	}
 	public void save() throws IOException{
-	    //Creamos un fujo de salida a disco, pasándole el nombre del archivo en disco o un objeto de la clase File.
+	    //Creamos un fujo de salida a disco, pasï¿½ndole el nombre del archivo en disco o un objeto de la clase File.
 	    FileOutputStream fileOut=new FileOutputStream(titulo+".holder");
 	    
 	    //El fujo de salida ObjectOutputStream es el que procesa los datos y se ha de vincular a un objeto fileOut de la clase FileOutputStream .
 	    ObjectOutputStream salida=new ObjectOutputStream(fileOut);
 	    
-	    //El método writeObject escribe los objetos al flujo de salida y los guarda en un archivo en disco. Por ejemplo, un string y un objeto de la clase Lista.
+	    //El mï¿½todo writeObject escribe los objetos al flujo de salida y los guarda en un archivo en disco. Por ejemplo, un string y un objeto de la clase Lista.
 	    salida.writeObject(this);
 	    
 	    //Finalmente, se cierran los flujos

@@ -1,5 +1,7 @@
+package com.example.zeroc.holders;
+
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+
 
 public class Bloque implements  java.io.Serializable{
 

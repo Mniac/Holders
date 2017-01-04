@@ -1,3 +1,4 @@
+package com.example.zeroc.holders;
 import java.util.Date;
 
 public class Puntuacion {
