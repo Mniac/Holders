@@ -1,9 +1,9 @@
-package com.example.zeroc.holders;
+import javax.swing.JOptionPane;
 
+public class Inicio implements  java.io.Serializable{
 
-public class Inicio {
-
-	private String texto = "En ___ciudad___, en cualquier ___pais___, ve a ___lugar___ donde puedas ir por ti mismo. Cuando llegues al escritorio principal, pregunta por visitar a aquel que se hace llamar ";
+	private static final long serialVersionUID = 1L;
+	private String texto = "En ___ciudad___, en ___pais___, ve a ___lugar___ donde puedas ir por ti mismo. Cuando llegues al escritorio principal, pregunta por visitar a aquel que se hace llamar ";
 	private String pais;
 	private String ciudad;
 	private boolean institucion;
@@ -17,9 +17,9 @@ public class Inicio {
 		texto = texto.replace("___ciudad___", this.ciudad);
 		texto = texto.replace("___pais___", this.pais);
 		if(this.institucion)
-			texto = texto.replace("___lugar___", "instituciï¿½n mental");
+			texto = texto.replace("___lugar___", "institución mental");
 		else
-			texto = texto.replace("___lugar___", "centro de reinserciï¿½n social");
+			texto = texto.replace("___lugar___", "centro de reinserción social");
 		texto = texto.replace("___ciudad___",this.ciudad);
 		texto = texto.concat(this.holder+".");
 	}

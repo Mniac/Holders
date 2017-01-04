@@ -1,11 +1,9 @@
-package com.example.zeroc.holders;
-
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.SingleSelectionModel;
 
-public class Bloque {
+public class Bloque implements  java.io.Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private String tipo;
 	private String texto;
 	private ArrayList<String> opciones = new ArrayList<>();
@@ -17,12 +15,10 @@ public class Bloque {
 	
 	public Bloque(String tipo) {
 		this.tipo = tipo;
-		fin = "vivo";
 	}
-
 	
-	public boolean ejecutar(){
-		
+	public void ejecutar(){
+	
 		switch (tipo) {
 		case "decision":			
 			int i = JOptionPane.showOptionDialog(null, texto, null, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opciones.toArray(), null);
@@ -44,9 +40,6 @@ public class Bloque {
 			System.err.println("tipo de bloque erroneo");
 			break;
 		}
-		if(fin != "vivo")
-			return false;
-		return true;
 	}
 
 
