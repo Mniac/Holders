@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/optionsbackground">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="238dp"
+            android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.30">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:text="Opciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/textView2"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="30sp"
+                        android:textStyle="normal|bold"
+                        android:textColor="@android:color/background_light" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5">
+
+                    <Switch
+                        android:text="Permadeath"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/switch1"
+                        android:layout_weight="1"
+                        android:layout_marginRight="50dp"
+                        android:layout_marginLeft="50dp"
+                        android:gravity="center"
+                        android:textSize="30sp"
+                        android:textColor="@android:color/background_light" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.70">
+
+                <TextView
+                    android:text="Perfil:"
+                    android:layout_width="match_parent"
+                    android:id="@+id/textView3"
+                    android:layout_weight="0.5"
+                    android:layout_height="match_parent"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:textColor="@android:color/background_light" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName"
+                    android:text="Escribe aquí"
+                    android:ems="10"
+                    android:id="@+id/editText"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
+                    android:textColor="@android:color/background_light" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

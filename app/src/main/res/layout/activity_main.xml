@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.zeroc.holders.MainActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.30"
+            android:background="@drawable/background"></LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="0.70"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="@drawable/btextbox">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.50">
+
+                    <Button
+                        android:text="@string/continuar"
+                        android:textColor="#ffffff"
+                        android:background="@drawable/buttonbackground"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="0.50"
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/btnMain1" />
+
+                    <Button
+                        android:text="@string/nuevoJuego"
+                        android:textColor="#ffffff"
+                        android:id="@+id/btnMain2"
+                        android:background="@drawable/buttonbackground"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="0.50"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.50">
+
+                    <Button
+                        android:text="@string/opciones"
+                        android:textColor="#ffffff"
+                        android:id="@+id/btnMain3"
+                        android:background="@drawable/buttonbackground"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="0.50"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="5dp" />
+
+                    <Button
+                        android:text="@string/bestRuns"
+                        android:textColor="#ffffff"
+                        android:id="@+id/btnMain4"
+                        android:background="@drawable/buttonbackground"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="0.50"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="5dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

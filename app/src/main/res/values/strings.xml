@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Holders</string>
+    <string name="continuar">Continuar</string>
+    <string name="nuevoJuego">Nuevo Juego</string>
+    <string name="opciones">Opciones</string>
+    <string name="bestRuns">Puntuaciones</string>
+    <string name="option">Opción</string>
+    <string name="accept">Aceptar</string>
+    <string name="orNombre">Ordenar por nombre</string>
+    <string name="orPuntos">Ordenar por puntuación</string>
+</resources>
