@@ -1,5 +1,6 @@
 package com.example.zeroc.holders;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,13 +15,13 @@ public class selection_game extends MainActivity {
 // Indica el layout para esta actividad.
 // El archivo de layout se guarda en res/layout/layout_actividad2.xml
         this.setContentView( R.layout.selection_game);
-
+        Intent data = this.getIntent();
         TextView textView4 = (TextView) findViewById(R.id.textView4);
-        textView4.setText(texto);
+        textView4.setText(data.getExtras().get("texto").toString());
         Button btnOp1 = (Button) findViewById(R.id.btnOp1);
-        btnOp1.setText(opciones.get(0));
+        btnOp1.setText(data.getExtras().get("op0").toString());
         Button btnOp2 = (Button) findViewById(R.id.btnOp2);
-        btnOp2.setText(opciones.get(1));
+        btnOp2.setText(data.getExtras().get("op2").toString());
     }
 
 }
