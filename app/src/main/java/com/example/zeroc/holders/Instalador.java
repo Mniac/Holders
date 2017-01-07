@@ -225,9 +225,11 @@ public class Instalador extends Activity{
 	}
 	private void writeHistoria(Historia h) throws IOException {
 		System.out.println(h.getTitulo()+" SAVE");
-        String fileName = h.getTitulo()+".holder";
+
 		//Creamos un fujo de salida a disco, pasándole el nombre del archivo en disco o un objeto de la clase File.
-		FileOutputStream fileOut= this.openFileOutput(fileName, Context.MODE_PRIVATE);
+		FileOutputStream fileOut= this.openFileOutput(h.getTitulo()+".holder", Context.MODE_PRIVATE);
+        System.out.println(Instalador.this.getFilesDir().getAbsolutePath());
+        System.out.println(fileOut.toString());
 
 		//El fujo de salida ObjectOutputStream es el que procesa los datos y se ha de vincular a un objeto fileOut de la clase FileOutputStream .
 		ObjectOutputStream salida=new ObjectOutputStream(fileOut);

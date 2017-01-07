@@ -33,5 +33,6 @@ public class Inicio implements  java.io.Serializable{
 	public void ejecutar(){
 		System.out.print("CARGANDO VISTA INICIO \n");
 		mainActivity.cargarVistaSimple(texto);
+
 	}
 }
