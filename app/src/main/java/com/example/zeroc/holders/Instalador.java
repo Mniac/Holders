@@ -1,10 +1,32 @@
 package com.example.zeroc.holders;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
-public class Instalador {
-	
-	public static void install() throws IOException {
+public class Instalador extends Activity{
+
+    protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("EJECUTANDO INSTALADOR1");
+        super.onCreate(savedInstanceState);
+        System.out.println("EJECUTANDO INSTALADOR2");
+        // Indica el layout para esta actividad.
+        // El archivo de layout se guarda en res/layout/layout_actividad2.xml
+        this.setContentView(R.layout.install);
+        System.out.println("EJECUTANDO INSTALADOR3");
+        try {
+            install();
+            System.out.println("EJECUTANDO INSTALADOR4");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.finish();
+    }
+
+	public void install() throws IOException {
 		
 		/*
 		Historia h1 = new Historia("The Holder of the End");
@@ -66,11 +88,12 @@ public class Instalador {
 		h2.addBloque(b24);
 		h2.addBloque(b25);
 		
-		h2.save();
+
+		writeHistoria(h2);
 		
 		
 		Historia h3 = new Historia("The Holder of the End");
-		h3.setInicio("Espa�a", "Viana", true);
+		h3.setInicio("España", "Viana", true);
 		
 		
 		Bloque b31 = new Bloque("random");
@@ -135,8 +158,8 @@ public class Instalador {
 		h3.addBloque(b31);
 		h3.addBloque(b32);
 		h3.addBloque(b33);
-		
-		h3.save();
+
+		writeHistoria(h3);
 		
 		Historia h4 = new Historia("The Holder of the Present");
 		h4.setInicio("Rusia", "Minsk", true);
@@ -178,8 +201,8 @@ public class Instalador {
 		h4.addBloque(b44);
 		h4.addBloque(b45);
 		h4.addBloque(b46);
-		
-		h4.save();
+
+		writeHistoria(h4);
 		
 		
 		Historia h5 = new Historia("The Holder of the Rage");
@@ -224,8 +247,25 @@ public class Instalador {
 		h5.addBloque(b55);
 		h5.addBloque(b56);
 		h5.addBloque(b57);
-		
-		h5.ejecutar();
+
+		writeHistoria(h5);
+	}
+	private void writeHistoria(Historia h) throws IOException {
+		System.out.println(h.getTitulo()+" .SAVE");
+
+		//Creamos un fujo de salida a disco, pasándole el nombre del archivo en disco o un objeto de la clase File.
+		FileOutputStream fileOut= this.openFileOutput(h.getTitulo()+".holder", Context.MODE_PRIVATE);
+
+		//El fujo de salida ObjectOutputStream es el que procesa los datos y se ha de vincular a un objeto fileOut de la clase FileOutputStream .
+		ObjectOutputStream salida=new ObjectOutputStream(fileOut);
+
+		//El método writeObject escribe los objetos al flujo de salida y los guarda en un archivo en disco. Por ejemplo, un string y un objeto de la clase Lista.
+		salida.writeObject(this);
+
+		//Finalmente, se cierran los flujos
+		//System.out.println("GUARDADO");
+		salida.close();
+
 	}
 }
 

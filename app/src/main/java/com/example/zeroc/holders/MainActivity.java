@@ -1,14 +1,10 @@
 package com.example.zeroc.holders;
 
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -21,28 +17,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Activity para instalar la aplicacion //controlar first Run
+        System.out.println("EJECUTANDO INSTALADOR");
+        Intent subActividad = new Intent( MainActivity.this, Instalador.class );
+        MainActivity.this.startActivityForResult( subActividad, REQUEST_CODE );
 
+        System.out.println("");
         TH = new TheHolders(this);
         Button btNew = (Button) this.findViewById( R.id.btnMain2 );
         Button btOptions = (Button) this.findViewById( R.id.btnMain3 );
         Button btPoints = (Button) this.findViewById( R.id.btnMain4 );
-        try{
-            TH.install();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder( MainActivity.this );
-        builder.setMessage( "Cargando Historias" );
-        builder.create().show();
+
+        System.out.println("CARGANDO HISTORIAS");
 
         btNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder( MainActivity.this );
-                builder.setMessage( "Antes de Iniciar Juego" );
-                builder.create().show();
-
-                TH.iniciarJuego();
+                System.out.println("ANTES DE INICIAR");
+                iniciarJuego();
             }
         });
 
@@ -65,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void iniciarJuego(){
+        this.startActivity( new Intent( this, TheHolders.class ) );
+
+    }
+
     public void cargarVistaSimple(String texto){
         Intent subActividad = new Intent( MainActivity.this, in_game.class );
         subActividad.putExtra("texto",texto);
@@ -81,4 +78,5 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.startActivityForResult( subActividad, REQUEST_CODE );
         return REQUEST_CODE;
     }
+
 }

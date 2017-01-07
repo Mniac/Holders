@@ -1,13 +1,18 @@
 package com.example.zeroc.holders;
 
+import android.app.Activity;
+import android.os.Bundle;
+
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-public class TheHolders {
+public class TheHolders extends Activity {
 
 	private static String[] titulos= {"The Holder of the Ambition","The Holder of the End","The Holder of the Present","The Holder of the Rage"};
 	private HashMap<String,Historia> historias = new HashMap<>();
@@ -16,25 +21,35 @@ public class TheHolders {
 	private List<Puntuacion> puntuaciones = new ArrayList<>();
 	private String nombre;
 	private MainActivity mainActivity;
-	
+
+	public TheHolders(){
+		for (String titulo : titulos)
+			historiasPendientes.add(titulo);
+		cargarHistorias();
+		System.out.println("ESTOU EJECUTANDOME MUY FUERTE");
+	}
+
 	public TheHolders(MainActivity mainActivity) {
 		for (String titulo : titulos) 
 			historiasPendientes.add(titulo);
-		
 		cargarHistorias();
 		this.mainActivity = mainActivity;
-		puntuaciones.add(new Puntuacion("pepe9", 0));
-		puntuaciones.add(new Puntuacion("pepe8", 1));
-		puntuaciones.add(new Puntuacion("pepe7", 2));
-		puntuaciones.add(new Puntuacion("pepe6", 3));
-		puntuaciones.add(new Puntuacion("pepe5", 4));
-		puntuaciones.add(new Puntuacion("pepe4", 5));
-		
 	}
+
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// Indica el layout para esta actividad.
+		// El archivo de layout se guarda en res/layout/layout_actividad2.xml
+		this.setContentView( R.layout.install);
+		System.out.println("Iniciando Instalador");
+		iniciarJuego();
+		finish();
+	}
+
 	public void addHistoria(String titulo) {
 		Historia aux = new Historia(titulo,mainActivity);
 		try {
-			aux.read();
+			aux = readHist(aux);
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
@@ -80,10 +95,11 @@ public class TheHolders {
 	
 	public void iniciarJuego() {
 		//JOptionPane.showMessageDialog(null, "Bienvenido a The Holders");
+		System.out.println("DENTRO DE INICIAR JUEGO");
 		while(!historiasPendientes.isEmpty()){
+			System.out.println("DENTRO DE BUCLE ANTES DE START");
 			start();
 			//JOptionPane.showMessageDialog(null, "Tienes "+(titulos.length-historiasPendientes.size())+" Holders de "+titulos.length+", nunca deben ser reunidos.");
-			
 		}
 		puntuaciones.add(new Puntuacion(nombre, titulos.length-historiasPendientes.size()));
 	}
@@ -109,9 +125,29 @@ public class TheHolders {
 		modoSurvive= survival;
 	}
 
-	public void install()throws IOException{
-			Instalador.install();
+	private Historia readHist(Historia h) throws IOException, ClassNotFoundException {
+
+		//Creamos un fujo de entrada a disco, pas�ndole el nombre del archivo en disco o un objeto de la clase File.
+		FileInputStream fileIn= this.openFileInput(h.getTitulo()+".holder");
+
+		//El fujo de entrada ObjectInputStream es el que procesa los datos y se ha de vincular a un objeto fileIn de la clase FileInputStream.
+		ObjectInputStream entrada= new ObjectInputStream(fileIn);
+
+		//El método readObject lee los objetos del flujo de entrada, en el mismo orden en el que ha sido escritos.
+		Object aux = entrada.readObject();
+
+		//Finalmente, se cierra los flujos
+		entrada.close();
+		if( aux instanceof Historia){
+			return (Historia)aux;
+
+		}else
+			return null;
+
+		// System.out.println("LEIDO");
+
 	}
+
 
 }
 

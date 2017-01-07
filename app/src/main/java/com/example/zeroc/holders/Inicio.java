@@ -1,5 +1,8 @@
 package com.example.zeroc.holders;
 
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
+
 public class Inicio implements  java.io.Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -28,7 +31,7 @@ public class Inicio implements  java.io.Serializable{
 	
 	
 	public void ejecutar(){
-
+		System.out.print("CARGANDO VISTA INICIO \n");
 		mainActivity.cargarVistaSimple(texto);
 	}
 }

@@ -14,11 +14,13 @@ public class Historia implements  java.io.Serializable{
 
 	public Historia(String titulo) {
 		this.titulo= titulo;
+		bloques = new ArrayList<>();
 	}
 	
 	public Historia(String titulo,MainActivity mainActivity) {
 		this.titulo= titulo;
 		this.mainActivity = mainActivity;
+		bloques = new ArrayList<>();
 	}
 
 	public void setInicio(String pais, String ciudad, boolean institucion){
@@ -32,6 +34,9 @@ public class Historia implements  java.io.Serializable{
 	
 	
 	public void ejecutar(){
+		if(inicio == null)
+		System.out.println("CARGANDO null");
+
 		inicio.ejecutar();
 		fin = "vivo";
 		System.out.println();
@@ -56,46 +61,7 @@ public class Historia implements  java.io.Serializable{
 			break;
 		}
 	}
-	
-	public void read() throws IOException, ClassNotFoundException {
-		//Creamos un fujo de entrada a disco, pas�ndole el nombre del archivo en disco o un objeto de la clase File.
-        FileInputStream fileIn=new FileInputStream(titulo+".holder");
-        
-		//El fujo de entrada ObjectInputStream es el que procesa los datos y se ha de vincular a un objeto fileIn de la clase FileInputStream.
-        ObjectInputStream entrada=new ObjectInputStream(fileIn);
-        
-        //El método readObject lee los objetos del flujo de entrada, en el mismo orden en el que ha sido escritos.
-        Historia h1 = null;
-        Object aux = entrada.readObject();
-        if( aux instanceof Historia){
-        	 h1 = (Historia)aux;
-             
-            //Se realizan tareas con dichos objetos
-            titulo = h1.titulo;
-         	inicio = h1.inicio;
-         	bloques = h1.bloques;
-         	fin = h1.fin;
-        }
-        	
-       //Finalmente, se cierra los flujos
-       // System.out.println("LEIDO");
-        entrada.close();
-	}
-	public void save() throws IOException{
-	    //Creamos un fujo de salida a disco, pas�ndole el nombre del archivo en disco o un objeto de la clase File.
-	    FileOutputStream fileOut=new FileOutputStream(titulo+".holder");
-	    
-	    //El fujo de salida ObjectOutputStream es el que procesa los datos y se ha de vincular a un objeto fileOut de la clase FileOutputStream .
-	    ObjectOutputStream salida=new ObjectOutputStream(fileOut);
-	    
-	    //El m�todo writeObject escribe los objetos al flujo de salida y los guarda en un archivo en disco. Por ejemplo, un string y un objeto de la clase Lista.
-	    salida.writeObject(this);
-	    
-	    //Finalmente, se cierran los flujos
-	    //System.out.println("GUARDADO");
-	    salida.close();
-	        
-	}
+
 	public String getFin() {
 		return fin;
 	}
