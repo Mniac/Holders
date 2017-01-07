@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class Instalador {
 	
-	public static void main(String[] args) throws IOException {
+	public static void install() throws IOException {
 		
 		/*
 		Historia h1 = new Historia("The Holder of the End");

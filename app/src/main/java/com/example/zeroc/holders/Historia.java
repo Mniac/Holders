@@ -10,16 +10,24 @@ public class Historia implements  java.io.Serializable{
 	private Inicio inicio;
 	private java.util.ArrayList<Bloque> bloques = new ArrayList<>();
 	private String fin;
+	private MainActivity mainActivity;
 
-	
-	public Historia(String titulo) {	
+	public Historia(String titulo) {
 		this.titulo= titulo;
 	}
+	
+	public Historia(String titulo,MainActivity mainActivity) {
+		this.titulo= titulo;
+		this.mainActivity = mainActivity;
+	}
+
 	public void setInicio(String pais, String ciudad, boolean institucion){
-		this.inicio = new Inicio(pais,ciudad,institucion,titulo);;
+		this.inicio = new Inicio(pais,ciudad,institucion,titulo,mainActivity);;
 	}
 	public void addBloque(Bloque bloque){
+
 		bloques.add(bloque);
+		bloque.setMainActitivy(mainActivity);
 	}	
 	
 	
@@ -38,13 +46,13 @@ public class Historia implements  java.io.Serializable{
 		
 		switch (fin) {
 		case "vivo":
-			JOptionPane.showMessageDialog(null, "Has sobrevivido");
+			//JOptionPane.showMessageDialog(null, "Has sobrevivido");
 			break;
 		case "muerto":
-			JOptionPane.showMessageDialog(null, "Has muerto");
+			//JOptionPane.showMessageDialog(null, "Has muerto");
 			break;
 		case "huye":
-			JOptionPane.showMessageDialog(null, "Has huido");
+			//JOptionPane.showMessageDialog(null, "Has huido");
 			break;
 		}
 	}
@@ -56,7 +64,7 @@ public class Historia implements  java.io.Serializable{
 		//El fujo de entrada ObjectInputStream es el que procesa los datos y se ha de vincular a un objeto fileIn de la clase FileInputStream.
         ObjectInputStream entrada=new ObjectInputStream(fileIn);
         
-        //El m�todo readObject lee los objetos del flujo de entrada, en el mismo orden en el que ha sido escritos.
+        //El método readObject lee los objetos del flujo de entrada, en el mismo orden en el que ha sido escritos.
         Historia h1 = null;
         Object aux = entrada.readObject();
         if( aux instanceof Historia){

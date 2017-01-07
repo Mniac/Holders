@@ -13,6 +13,7 @@ public class Bloque implements  java.io.Serializable{
 	private ArrayList<Bloque> opcionSiguiente = new ArrayList<>();
 	private Bloque siguiente;
 	private String fin;
+	private MainActivity mainActivity;
 	
 	
 	public Bloque(String tipo) {
@@ -22,18 +23,18 @@ public class Bloque implements  java.io.Serializable{
 	public void ejecutar(){
 	
 		switch (tipo) {
-		case "decision":			
-			int i = JOptionPane.showOptionDialog(null, texto, null, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opciones.toArray(), null);
+		case "decision":
+			int i = mainActivity.cargarVistaSelect(texto,opciones);
 			siguiente = opcionSiguiente.get(i);
 			fin = opcionFin.get(i);
 			break;
 		case "simple":
-			JOptionPane.showMessageDialog(null, texto);
+			mainActivity.cargarVistaSimple(texto);
 			siguiente = opcionSiguiente.get(0);
 			fin = opcionFin.get(0);
 			break;
 		case "random":
-			JOptionPane.showMessageDialog(null, texto);
+			mainActivity.cargarVistaSimple(texto);
 			int random = (int) (Math.random() * opciones.size());
 			siguiente = opcionSiguiente.get(random);
 			fin = opcionFin.get(random);
@@ -62,5 +63,8 @@ public class Bloque implements  java.io.Serializable{
 	public void setTexto(String texto) {
 		this.texto = texto;
 	}
-	
+
+	public void setMainActitivy( MainActivity mainActivity){
+		this.mainActivity = mainActivity;
+	}
 }

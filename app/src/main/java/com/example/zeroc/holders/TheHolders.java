@@ -7,8 +7,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 public class TheHolders {
 
 	private static String[] titulos= {"The Holder of the Ambition","The Holder of the End","The Holder of the Present","The Holder of the Rage"};
@@ -17,13 +15,14 @@ public class TheHolders {
 	private boolean modoSurvive = true;
 	private List<Puntuacion> puntuaciones = new ArrayList<>();
 	private String nombre;
+	private MainActivity mainActivity;
 	
-	public TheHolders() {
+	public TheHolders(MainActivity mainActivity) {
 		for (String titulo : titulos) 
 			historiasPendientes.add(titulo);
 		
 		cargarHistorias();
-		
+		this.mainActivity = mainActivity;
 		puntuaciones.add(new Puntuacion("pepe9", 0));
 		puntuaciones.add(new Puntuacion("pepe8", 1));
 		puntuaciones.add(new Puntuacion("pepe7", 2));
@@ -33,12 +32,13 @@ public class TheHolders {
 		
 	}
 	public void addHistoria(String titulo) {
-		Historia aux = new Historia(titulo);
+		Historia aux = new Historia(titulo,mainActivity);
 		try {
 			aux.read();
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
+
 		historias.put(titulo, aux);
 	}
 	public void cargarHistorias() {
@@ -79,17 +79,13 @@ public class TheHolders {
 	}
 	
 	public void iniciarJuego() {
-		JOptionPane.showMessageDialog(null, "Bienvenido a The Holders");
+		//JOptionPane.showMessageDialog(null, "Bienvenido a The Holders");
 		while(!historiasPendientes.isEmpty()){
 			start();
-			JOptionPane.showMessageDialog(null, "Tienes "+(titulos.length-historiasPendientes.size())+" Holders de "+titulos.length+", nunca deben ser reunidos.");
+			//JOptionPane.showMessageDialog(null, "Tienes "+(titulos.length-historiasPendientes.size())+" Holders de "+titulos.length+", nunca deben ser reunidos.");
 			
 		}
 		puntuaciones.add(new Puntuacion(nombre, titulos.length-historiasPendientes.size()));
-	}
-	
-	public static void main(String[] args) {
-		new TheHolders().iniciarJuego();
 	}
 	
 	public void ordenarPorFecha(){
@@ -113,9 +109,10 @@ public class TheHolders {
 		modoSurvive= survival;
 	}
 
-	
-	   
-	
+	public void install()throws IOException{
+			Instalador.install();
+	}
+
 }
 
 

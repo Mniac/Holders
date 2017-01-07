@@ -39,10 +39,10 @@ public class options_menu extends MainActivity {
         });
 
         if(mySwitch.isChecked()){
-            TH.setSurvive(true);
+            //TH.setSurvive(true);
         }
         else {
-            TH.setSurvive(false);
+           // TH.setSurvive(false);
         }
 
         EditText edText1 = (EditText) findViewById(R.id.editText);
