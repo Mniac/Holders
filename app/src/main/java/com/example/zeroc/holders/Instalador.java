@@ -27,34 +27,7 @@ public class Instalador extends Activity{
     }
 
 	public void install() throws IOException {
-		
-		/*
-		Historia h1 = new Historia("The Holder of the End");
-		h1.setInicio("ciudad", "pais", true);
-		
-		
-		Bloque b1 = new Bloque("decision");
-		Bloque b2 = new Bloque("simple");
-		Bloque b3 = new Bloque("random");
-		
-		b1.setTexto("bloque eleccion");
-		b1.addOpcion("b2", b2, "vivo");
-		b1.addOpcion("b3", b3, "vivo");
-		
-		b2.setTexto("bloque simple, mueres");
-		b2.addOpcion("mueres", null, "muerto");
-		
-		b3.setTexto("bloque aleatorio, vives o huyes");
-		b3.addOpcion("huyes", null, "huye");
-		b3.addOpcion("vives", null, "vivo");
-		
-		h1.addBloque(b1);
-		h1.addBloque(b2);
-		h1.addBloque(b3);
-		
-		h1.ejecutar();
-		*/
-		
+
 		Historia h2 = new Historia("The Holder of the Ambition");
 		h2.setInicio("EEUU", "New York", true);
 		
@@ -251,16 +224,16 @@ public class Instalador extends Activity{
 		writeHistoria(h5);
 	}
 	private void writeHistoria(Historia h) throws IOException {
-		System.out.println(h.getTitulo()+" .SAVE");
-
+		System.out.println(h.getTitulo()+" SAVE");
+        String fileName = h.getTitulo()+".holder";
 		//Creamos un fujo de salida a disco, pasándole el nombre del archivo en disco o un objeto de la clase File.
-		FileOutputStream fileOut= this.openFileOutput(h.getTitulo()+".holder", Context.MODE_PRIVATE);
+		FileOutputStream fileOut= this.openFileOutput(fileName, Context.MODE_PRIVATE);
 
 		//El fujo de salida ObjectOutputStream es el que procesa los datos y se ha de vincular a un objeto fileOut de la clase FileOutputStream .
 		ObjectOutputStream salida=new ObjectOutputStream(fileOut);
 
 		//El método writeObject escribe los objetos al flujo de salida y los guarda en un archivo en disco. Por ejemplo, un string y un objeto de la clase Lista.
-		salida.writeObject(this);
+		salida.writeObject(h);
 
 		//Finalmente, se cierran los flujos
 		//System.out.println("GUARDADO");

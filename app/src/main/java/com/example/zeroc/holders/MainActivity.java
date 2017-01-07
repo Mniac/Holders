@@ -18,12 +18,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Activity para instalar la aplicacion //controlar first Run
-        System.out.println("EJECUTANDO INSTALADOR");
-        Intent subActividad = new Intent( MainActivity.this, Instalador.class );
-        MainActivity.this.startActivityForResult( subActividad, REQUEST_CODE );
+        System.out.println(getFilesDir()+"EJECUTANDO INSTALADOR");
+        this.startActivity( new Intent( this, Instalador.class ) );
 
-        System.out.println("");
-        TH = new TheHolders(this);
+        System.out.println("Cosas nazis");
+
         Button btNew = (Button) this.findViewById( R.id.btnMain2 );
         Button btOptions = (Button) this.findViewById( R.id.btnMain3 );
         Button btPoints = (Button) this.findViewById( R.id.btnMain4 );
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent subActividad = new Intent( MainActivity.this, options_menu.class );
-
                 MainActivity.this.startActivityForResult( subActividad, REQUEST_CODE );
             }
         });
