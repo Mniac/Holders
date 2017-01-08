@@ -28,12 +28,6 @@ public class Inicio implements  java.io.Serializable{
 		texto = texto.concat(this.holder+".");
 
 	}
-	public void setContext(MainActivity mainActivity){
-		this.mainActivity = mainActivity;
-	}
+	public String getTexto(){return texto;}
 
-	public void ejecutar(){
-		mainActivity.cargarVistaSimple(texto);
-
-	}
 }

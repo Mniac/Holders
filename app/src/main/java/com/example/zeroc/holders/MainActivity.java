@@ -38,14 +38,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent subActividad = new Intent( MainActivity.this, in_game.class );
-                //subActividad.putExtra("texto",texto);
-                MainActivity.this.startActivityForResult( subActividad, REQUEST_CODE );
-
                 System.out.println("CARGAR HISTORIAS()");
-               // cargarHistorias();
+                cargarHistorias();
                 System.out.println("INICIAR JUEGO()");
-               // iniciarJuego();
+                iniciarJuego();
             }
         });
 
@@ -86,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     public String start(){
         int random = (int) (Math.random()*historiasPendientes.size());
         Historia hActual = historias.get(historiasPendientes.get(random));
-        hActual.ejecutar();
+        ejecutar(hActual);
         if(modoSurvive && hActual.getFin().equals("muerto")){
             for (String titulo : titulos)
                 historiasPendientes.add(titulo);
@@ -154,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
 
         //El método readObject lee los objetos del flujo de entrada, en el mismo orden en el que ha sido escritos.
         Historia aux = (Historia) entrada.readObject();
-        aux.setContext(this);
 
         //Finalmente, se cierra los flujos
         entrada.close();
@@ -166,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void cargarVistaSimple(String texto){
         Intent subActividad = new Intent( MainActivity.this, in_game.class );
-        //subActividad.putExtra("texto",texto);
+        subActividad.putExtra("texto",texto);
         MainActivity.this.startActivityForResult( subActividad, REQUEST_CODE );
     }
 
@@ -178,5 +173,58 @@ public class MainActivity extends AppCompatActivity {
             subActividad.putExtra(("op"+i) ,opciones.get(i));
         this.startActivityForResult( subActividad, REQUEST_CODE );
         return REQUEST_CODE;
+    }
+
+
+    public void ejecutar(Historia h){
+        System.out.println("\tIniciando Historia " + h.titulo);
+        cargarVistaSimple(h.inicio.getTexto());
+        h.fin = "vivo";
+        Bloque actual = h.bloques.get(0);
+        while (h.fin.equals("vivo")) {
+            ejecutar(actual);
+            h.fin = actual.getFin();
+            if(actual.getSiguiente() == null)
+                break;
+            actual = actual.getSiguiente();
+        }
+        System.out.println("\tFIN Historia " + h.titulo);
+        switch (h.fin) {
+            case "vivo":
+                //JOptionPane.showMessageDialog(null, "Has sobrevivido");
+                break;
+            case "muerto":
+                //JOptionPane.showMessageDialog(null, "Has muerto");
+                break;
+            case "huye":
+                //JOptionPane.showMessageDialog(null, "Has huido");
+                break;
+        }
+    }
+    public void ejecutar(Bloque b){
+        switch (b.tipo) {
+            case "decision":
+                System.out.println("\t\t BLOQUE DECISION");
+                int i = cargarVistaSelect(b.texto,b.opciones);
+                b.siguiente = b.opcionSiguiente.get(i);
+                b.fin = b.opcionFin.get(i);
+                break;
+            case "simple":
+                System.out.println("\t\t BLOQUE SIMPLE");
+                cargarVistaSimple(b.texto);
+                b.siguiente = b.opcionSiguiente.get(0);
+                b.fin = b.opcionFin.get(0);
+                break;
+            case "random":
+                System.out.println("\t\t BLOQUE RANDOM");
+                cargarVistaSimple(b.texto);
+                int random = (int) (Math.random() * b.opciones.size());
+                b.siguiente = b.opcionSiguiente.get(random);
+                b.fin = b.opcionFin.get(random);
+                break;
+            default:
+                System.err.println("tipo de bloque erroneo");
+                break;
+        }
     }
 }
