@@ -23,12 +23,7 @@ public class TheHolders extends Activity {
 	private String nombre;
 	private final int REQUEST_CODE = 1;
 
-	public TheHolders(){
-		for (String titulo : titulos)
-			historiasPendientes.add(titulo);
-		cargarHistorias();
-		System.out.println("ESTOU EJECUTANDOME MUY FUERTE");
-	}
+
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,6 +31,12 @@ public class TheHolders extends Activity {
 		// El archivo de layout se guarda en res/layout/layout_actividad2.xml
 		this.setContentView( R.layout.install);
 		System.out.println("Iniciando Instalador");
+
+        for (String titulo : titulos)
+            historiasPendientes.add(titulo);
+        cargarHistorias();
+
+        System.out.println("ESTOU EJECUTANDOME MUY FUERTE");
 		iniciarJuego();
 		finish();
 	}
@@ -147,7 +148,7 @@ public class TheHolders extends Activity {
 	}
 
 	public void cargarVistaSimple(String texto){
-		Intent subActividad = new Intent( TheHolders.this, in_game.class );
+		Intent subActividad = new Intent( this, in_game.class );
 		subActividad.putExtra("texto",texto);
 		TheHolders.this.startActivityForResult( subActividad, REQUEST_CODE );
 
