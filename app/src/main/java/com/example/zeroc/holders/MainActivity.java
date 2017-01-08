@@ -56,25 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void iniciarJuego(){
-        this.startActivity( new Intent( this, TheHolders.class ) );
+        this.startActivityForResult( new Intent( this, TheHolders.class ), REQUEST_CODE);
 
     }
-
-    public void cargarVistaSimple(String texto){
-        Intent subActividad = new Intent( MainActivity.this, in_game.class );
-        subActividad.putExtra("texto",texto);
-        MainActivity.this.startActivityForResult( subActividad, REQUEST_CODE );
-
-    }
-
-    public int cargarVistaSelect(String texto, ArrayList<String> opciones){
-        Intent subActividad = new Intent( MainActivity.this, selection_game.class );
-        subActividad.putExtra("texto",texto);
-        subActividad.putExtra("numOp" ,opciones.size());
-        for(int i = 0; i < opciones.size(); i++)
-            subActividad.putExtra(("op"+i) ,opciones.get(i));
-        MainActivity.this.startActivityForResult( subActividad, REQUEST_CODE );
-        return REQUEST_CODE;
-    }
-
 }

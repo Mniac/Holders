@@ -1,6 +1,7 @@
 package com.example.zeroc.holders;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.io.FileInputStream;
@@ -20,20 +21,13 @@ public class TheHolders extends Activity {
 	private boolean modoSurvive = true;
 	private List<Puntuacion> puntuaciones = new ArrayList<>();
 	private String nombre;
-	private MainActivity mainActivity;
+	private final int REQUEST_CODE = 1;
 
 	public TheHolders(){
 		for (String titulo : titulos)
 			historiasPendientes.add(titulo);
 		cargarHistorias();
 		System.out.println("ESTOU EJECUTANDOME MUY FUERTE");
-	}
-
-	public TheHolders(MainActivity mainActivity) {
-		for (String titulo : titulos)
-			historiasPendientes.add(titulo);
-		cargarHistorias();
-		this.mainActivity = mainActivity;
 	}
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +41,7 @@ public class TheHolders extends Activity {
 	}
 
 	public void addHistoria(String titulo) {
-		Historia aux = new Historia(titulo,mainActivity);
+		Historia aux = new Historia(titulo,this);
 		try {
 			aux = readHist(aux);
 		} catch (ClassNotFoundException | IOException e) {
@@ -61,22 +55,22 @@ public class TheHolders extends Activity {
 			addHistoria(string);
 		}
 	}
-	
+
 	public String start(){
 		int random = (int) (Math.random()*historiasPendientes.size());
 		Historia hActual = historias.get(historiasPendientes.get(random));
 		hActual.ejecutar();
 		if(modoSurvive && hActual.getFin().equals("muerto")){
-			for (String titulo : titulos) 
+			for (String titulo : titulos)
 				historiasPendientes.add(titulo);
 		}
 		if(hActual.getFin().equals("vivo")){
 			historiasPendientes.remove(hActual.getTitulo());
-		}	
+		}
 		return hActual.getFin();
 	}
-	
-	
+
+
 	public void guardar(){
 		//guardar historiasPendientes
 		//guardar modoSurvive
@@ -85,14 +79,14 @@ public class TheHolders extends Activity {
 		//cargar historiasPendientes
 		//cargar modoSurvive
 	}
-	
+
 	public String getNombre(){
 		return nombre;
 	}
 	public void setNombre(String nombre){
 		this.nombre = nombre;
 	}
-	
+
 	public void iniciarJuego() {
 		//JOptionPane.showMessageDialog(null, "Bienvenido a The Holders");
 		System.out.println("DENTRO DE INICIAR JUEGO");
@@ -103,7 +97,7 @@ public class TheHolders extends Activity {
 		}
 		puntuaciones.add(new Puntuacion(nombre, titulos.length-historiasPendientes.size()));
 	}
-	
+
 	public void ordenarPorFecha(){
 		 Collections.sort(puntuaciones, new Comparator<Puntuacion>(){
 			 public int compare(Puntuacion object1, Puntuacion object2) {
@@ -111,16 +105,16 @@ public class TheHolders extends Activity {
 			    }
 		 });
 	}
-	
+
 	public void ordenarPorNombre(){
-		
+
 		 Collections.sort(puntuaciones, new Comparator<Puntuacion>(){
 			 public int compare(Puntuacion object1, Puntuacion object2) {
 			        return object1.getNombre().compareTo(object2.getNombre());
 			    }
 		 });
 	}
-	
+
 	private void setSurvive(boolean survival) {
 		modoSurvive= survival;
 	}
@@ -128,7 +122,8 @@ public class TheHolders extends Activity {
 	private Historia readHist(Historia h) throws IOException, ClassNotFoundException {
         System.out.println(h.getTitulo()+".holder");
 		//Creamos un fujo de entrada a disco, pasándole el nombre del archivo en disco o un objeto de la clase File.
-		FileInputStream fileIn= this.openFileInput(h.getTitulo()+".holder");
+
+		FileInputStream fileIn= TheHolders.this.openFileInput(h.getTitulo()+".holder");
 
 		//El fujo de entrada ObjectInputStream es el que procesa los datos y se ha de vincular a un objeto fileIn de la clase FileInputStream.
 		ObjectInputStream entrada= new ObjectInputStream(fileIn);
@@ -151,6 +146,22 @@ public class TheHolders extends Activity {
 
 	}
 
+	public void cargarVistaSimple(String texto){
+		Intent subActividad = new Intent( TheHolders.this, in_game.class );
+		subActividad.putExtra("texto",texto);
+		TheHolders.this.startActivityForResult( subActividad, REQUEST_CODE );
+
+	}
+
+	public int cargarVistaSelect(String texto, ArrayList<String> opciones){
+		Intent subActividad = new Intent( TheHolders.this, selection_game.class );
+		subActividad.putExtra("texto",texto);
+		subActividad.putExtra("numOp" ,opciones.size());
+		for(int i = 0; i < opciones.size(); i++)
+			subActividad.putExtra(("op"+i) ,opciones.get(i));
+		TheHolders.this.startActivityForResult( subActividad, REQUEST_CODE );
+		return REQUEST_CODE;
+	}
 
 }
 

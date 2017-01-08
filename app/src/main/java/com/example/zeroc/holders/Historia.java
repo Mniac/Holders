@@ -1,38 +1,40 @@
 package com.example.zeroc.holders;
 
+import android.content.Context;
+
 import java.io.*;
 import java.util.ArrayList;
 
 public class Historia implements  java.io.Serializable{
-	
+
 	private static final long serialVersionUID = 1L;
 	private String titulo;
 	private Inicio inicio;
 	private java.util.ArrayList<Bloque> bloques = new ArrayList<>();
 	private String fin;
-	private MainActivity mainActivity;
+	private TheHolders theHolders;
 
 	public Historia(String titulo) {
 		this.titulo= titulo;
 		bloques = new ArrayList<>();
 	}
-	
-	public Historia(String titulo,MainActivity mainActivity) {
+
+	public Historia(String titulo,TheHolders theHolders) {
 		this.titulo= titulo;
-		this.mainActivity = mainActivity;
+		this.theHolders = theHolders;
 		bloques = new ArrayList<>();
 	}
 
 	public void setInicio(String pais, String ciudad, boolean institucion){
-		this.inicio = new Inicio(pais,ciudad,institucion,titulo,mainActivity);;
+		this.inicio = new Inicio(pais,ciudad,institucion,titulo,theHolders);;
 	}
 	public void addBloque(Bloque bloque){
 
 		bloques.add(bloque);
-		bloque.setMainActitivy(mainActivity);
-	}	
-	
-	
+		bloque.setTheHolders(theHolders);
+	}
+
+
 	public void ejecutar(){
 		if(inicio == null)
 		System.out.println("CARGANDO null");
@@ -48,7 +50,7 @@ public class Historia implements  java.io.Serializable{
 				break;
 			actual = actual.getSiguiente();
 		}
-		
+
 		switch (fin) {
 		case "vivo":
 			//JOptionPane.showMessageDialog(null, "Has sobrevivido");
@@ -65,7 +67,7 @@ public class Historia implements  java.io.Serializable{
 	public String getFin() {
 		return fin;
 	}
-	public Object getTitulo() {
+	public String getTitulo() {
 		return titulo;
 	}
 }

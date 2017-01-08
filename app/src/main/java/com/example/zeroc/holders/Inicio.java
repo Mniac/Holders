@@ -11,9 +11,9 @@ public class Inicio implements  java.io.Serializable{
 	private String ciudad;
 	private boolean institucion;
 	private String holder;
-	private MainActivity mainActivity;
-	
-	public Inicio(String pais, String ciudad,	boolean institucion, String holder ,MainActivity mainActivity) {
+	private TheHolders theHolders;
+
+	public Inicio(String pais, String ciudad,	boolean institucion, String holder ,TheHolders theHolders) {
 		this.pais = pais;
 		this.ciudad = ciudad;
 		this.institucion = institucion;
@@ -26,13 +26,13 @@ public class Inicio implements  java.io.Serializable{
 			texto = texto.replace("___lugar___", "centro de reinserción social");
 		texto = texto.replace("___ciudad___",this.ciudad);
 		texto = texto.concat(this.holder+".");
-		this.mainActivity = mainActivity;
+		this.theHolders = theHolders;
 	}
 	
 	
 	public void ejecutar(){
 		System.out.print("CARGANDO VISTA INICIO \n");
-		mainActivity.cargarVistaSimple(texto);
+		theHolders.cargarVistaSimple(texto);
 
 	}
 }
