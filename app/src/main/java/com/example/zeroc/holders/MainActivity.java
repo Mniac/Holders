@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private List<Puntuacion> puntuaciones = new ArrayList<>();
     private String nombre;
     private final int REQUEST_CODE = 1;
+    private Historia hActual;
+    private Bloque actual;
+    private boolean iniciado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +84,15 @@ public class MainActivity extends AppCompatActivity {
 
     public String start(){
         int random = (int) (Math.random()*historiasPendientes.size());
-        Historia hActual = historias.get(historiasPendientes.get(random));
+        hActual = historias.get(historiasPendientes.get(random));
+        System.out.println("\tIniciando Historia " + hActual.titulo);
+        iniciado = false;
+        hActual.fin = "vivo";
+        actual = hActual.bloques.get(0);
         ejecutar(hActual);
+
+
+
         if(modoSurvive && hActual.getFin().equals("muerto")){
             for (String titulo : titulos)
                 historiasPendientes.add(titulo);
@@ -111,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void iniciarJuego() {
-        while(!historiasPendientes.isEmpty()){
+        if(!historiasPendientes.isEmpty()){
             start();
             //JOptionPane.showMessageDialog(null, "Tienes "+(titulos.length-historiasPendientes.size())+" Holders de "+titulos.length+", nunca deben ser reunidos.");
         }
@@ -175,52 +185,76 @@ public class MainActivity extends AppCompatActivity {
         return REQUEST_CODE;
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if ( requestCode == REQUEST_CODE) {
+            switch (resultCode) {
+                case 1:
+                    actual.siguiente = actual.opcionSiguiente.get(0);
+                    actual.fin = actual.opcionFin.get(0);
+                    actual =actual.getSiguiente();
+                    ejecutar(actual);
+                    break;
+                case 2:
+                    actual.siguiente = actual.opcionSiguiente.get(1);
+                    actual.fin = actual.opcionFin.get(1);
+                    actual =actual.getSiguiente();
+                    ejecutar(actual);
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+
+                   break;
+                case 5:
+
+                    break;
+            }
+        }
+    }
+
+
 
     public void ejecutar(Historia h){
-        System.out.println("\tIniciando Historia " + h.titulo);
-        cargarVistaSimple(h.inicio.getTexto());
-        h.fin = "vivo";
-        Bloque actual = h.bloques.get(0);
-        while (h.fin.equals("vivo")) {
-            ejecutar(actual);
-            h.fin = actual.getFin();
-            if(actual.getSiguiente() == null)
-                break;
-            actual = actual.getSiguiente();
+
+        if(!iniciado){
+            iniciado = true;
+            cargarVistaSimple(h.inicio.getTexto());
         }
-        System.out.println("\tFIN Historia " + h.titulo);
-        switch (h.fin) {
-            case "vivo":
-                //JOptionPane.showMessageDialog(null, "Has sobrevivido");
-                break;
-            case "muerto":
-                //JOptionPane.showMessageDialog(null, "Has muerto");
-                break;
-            case "huye":
-                //JOptionPane.showMessageDialog(null, "Has huido");
-                break;
+
+        else{
+            if( actual.getSiguiente() != null && actual.getFin().equals("vivo"))
+                ejecutar(actual);
+            else{
+                System.out.println("\tFIN Historia " + h.titulo);
+                switch (h.fin) {
+                    case "vivo":
+                        cargarVistaSimple("Has conseguido el Holder");
+                        break;
+                    case "muerto":
+                        cargarVistaSimple("Has muerto");
+                        break;
+                    case "huye":
+                        cargarVistaSimple("Has huido");
+                        break;
+                }
+            }
         }
     }
     public void ejecutar(Bloque b){
         switch (b.tipo) {
             case "decision":
                 System.out.println("\t\t BLOQUE DECISION");
-                int i = cargarVistaSelect(b.texto,b.opciones);
-                b.siguiente = b.opcionSiguiente.get(i);
-                b.fin = b.opcionFin.get(i);
+                cargarVistaSelect(b.texto,b.opciones);
                 break;
             case "simple":
                 System.out.println("\t\t BLOQUE SIMPLE");
                 cargarVistaSimple(b.texto);
-                b.siguiente = b.opcionSiguiente.get(0);
-                b.fin = b.opcionFin.get(0);
                 break;
             case "random":
                 System.out.println("\t\t BLOQUE RANDOM");
                 cargarVistaSimple(b.texto);
-                int random = (int) (Math.random() * b.opciones.size());
-                b.siguiente = b.opcionSiguiente.get(random);
-                b.fin = b.opcionFin.get(random);
                 break;
             default:
                 System.err.println("tipo de bloque erroneo");

@@ -27,6 +27,9 @@ public class in_game extends MainActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("PULSANDO BOTON");
+                setResult(1);
+
+
                 finish();
             }
         });
