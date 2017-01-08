@@ -10,16 +10,12 @@ import java.io.ObjectOutputStream;
 public class Instalador extends Activity{
 
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("EJECUTANDO INSTALADOR1");
         super.onCreate(savedInstanceState);
-        System.out.println("EJECUTANDO INSTALADOR2");
         // Indica el layout para esta actividad.
         // El archivo de layout se guarda en res/layout/layout_actividad2.xml
         this.setContentView(R.layout.install);
-        System.out.println("EJECUTANDO INSTALADOR3");
         try {
             install();
-            System.out.println("EJECUTANDO INSTALADOR4");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -224,12 +220,8 @@ public class Instalador extends Activity{
 		writeHistoria(h5);
 	}
 	private void writeHistoria(Historia h) throws IOException {
-		System.out.println(h.getTitulo()+" SAVE");
-
 		//Creamos un fujo de salida a disco, pasándole el nombre del archivo en disco o un objeto de la clase File.
 		FileOutputStream fileOut= this.openFileOutput(h.getTitulo()+".holder", Context.MODE_PRIVATE);
-        System.out.println(Instalador.this.getFilesDir().getAbsolutePath());
-        System.out.println(fileOut.toString());
 
 		//El fujo de salida ObjectOutputStream es el que procesa los datos y se ha de vincular a un objeto fileOut de la clase FileOutputStream .
 		ObjectOutputStream salida=new ObjectOutputStream(fileOut);

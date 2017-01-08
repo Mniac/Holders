@@ -11,7 +11,7 @@ public class Inicio implements  java.io.Serializable{
 	private String ciudad;
 	private boolean institucion;
 	private String holder;
-	private TheHolders theHolders;
+	private MainActivity mainActivity;
 
 	public Inicio(String pais, String ciudad,	boolean institucion, String holder) {
 		this.pais = pais;
@@ -28,14 +28,12 @@ public class Inicio implements  java.io.Serializable{
 		texto = texto.concat(this.holder+".");
 
 	}
-	public void setTheHolders(TheHolders theHolders){
-		this.theHolders = theHolders;
+	public void setContext(MainActivity mainActivity){
+		this.mainActivity = mainActivity;
 	}
 
 	public void ejecutar(){
-		System.out.println("CARGANDO VISTA INICIO \n");
-		System.out.println(theHolders);
-		theHolders.cargarVistaSimple(texto);
+		mainActivity.cargarVistaSimple(texto);
 
 	}
 }

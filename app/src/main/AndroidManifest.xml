@@ -21,7 +21,6 @@
         <activity android:name=".options_menu" />
         <activity android:name=".selection_game" />
         <activity android:name=".Instalador" />
-        <activity android:name=".TheHolders" />
     </application>
 
 </manifest>

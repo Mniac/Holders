@@ -9,7 +9,7 @@ public class Historia implements  java.io.Serializable{
 	private Inicio inicio;
 	private java.util.ArrayList<Bloque> bloques = new ArrayList<>();
 	private String fin;
-	private TheHolders theHolders;
+	private MainActivity mainActivity;
 
 	public Historia(String titulo) {
 		this.titulo= titulo;
@@ -22,21 +22,18 @@ public class Historia implements  java.io.Serializable{
 	public void addBloque(Bloque bloque){
 		bloques.add(bloque);
 	}
-	public void setTheHolders(TheHolders theHolders){
-		this.theHolders = theHolders;
-		inicio.setTheHolders(theHolders);
+	public void setContext(MainActivity mainActivity){
+		this.mainActivity = mainActivity;
+		inicio.setContext(mainActivity);
 		for (Bloque actual : bloques) {
-			actual.setTheHolders(theHolders);
+			actual.setContext(mainActivity);
 		}
 	}
 
 	public void ejecutar(){
-
-		System.out.println("ANTES DE EJECUTAR INICIO");
-		System.out.println(theHolders);
+		System.out.println("\tIniciando Historia " + titulo);
 		inicio.ejecutar();
 		fin = "vivo";
-		System.out.println();
 		Bloque actual = bloques.get(0);
 		while (fin.equals("vivo")) {
 			actual.ejecutar();
@@ -45,7 +42,7 @@ public class Historia implements  java.io.Serializable{
 				break;
 			actual = actual.getSiguiente();
 		}
-
+		System.out.println("\tFIN Historia " + titulo);
 		switch (fin) {
 		case "vivo":
 			//JOptionPane.showMessageDialog(null, "Has sobrevivido");
