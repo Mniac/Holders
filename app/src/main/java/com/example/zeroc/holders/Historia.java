@@ -1,8 +1,5 @@
 package com.example.zeroc.holders;
 
-import android.content.Context;
-
-import java.io.*;
 import java.util.ArrayList;
 
 public class Historia implements  java.io.Serializable{
@@ -19,26 +16,24 @@ public class Historia implements  java.io.Serializable{
 		bloques = new ArrayList<>();
 	}
 
-	public Historia(String titulo,TheHolders theHolders) {
-		this.titulo= titulo;
-		this.theHolders = theHolders;
-		bloques = new ArrayList<>();
-	}
-
 	public void setInicio(String pais, String ciudad, boolean institucion){
-		this.inicio = new Inicio(pais,ciudad,institucion,titulo,theHolders);;
+		this.inicio = new Inicio(pais,ciudad,institucion,titulo);
 	}
 	public void addBloque(Bloque bloque){
-
 		bloques.add(bloque);
-		bloque.setTheHolders(theHolders);
+	}
+	public void setTheHolders(TheHolders theHolders){
+		this.theHolders = theHolders;
+		inicio.setTheHolders(theHolders);
+		for (Bloque actual : bloques) {
+			actual.setTheHolders(theHolders);
+		}
 	}
 
-
 	public void ejecutar(){
-		if(inicio == null)
-		System.out.println("CARGANDO null");
 
+		System.out.println("ANTES DE EJECUTAR INICIO");
+		System.out.println(theHolders);
 		inicio.ejecutar();
 		fin = "vivo";
 		System.out.println();

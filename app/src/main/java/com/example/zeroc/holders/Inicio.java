@@ -13,7 +13,7 @@ public class Inicio implements  java.io.Serializable{
 	private String holder;
 	private TheHolders theHolders;
 
-	public Inicio(String pais, String ciudad,	boolean institucion, String holder ,TheHolders theHolders) {
+	public Inicio(String pais, String ciudad,	boolean institucion, String holder) {
 		this.pais = pais;
 		this.ciudad = ciudad;
 		this.institucion = institucion;
@@ -26,12 +26,15 @@ public class Inicio implements  java.io.Serializable{
 			texto = texto.replace("___lugar___", "centro de reinserción social");
 		texto = texto.replace("___ciudad___",this.ciudad);
 		texto = texto.concat(this.holder+".");
+
+	}
+	public void setTheHolders(TheHolders theHolders){
 		this.theHolders = theHolders;
 	}
-	
-	
+
 	public void ejecutar(){
-		System.out.print("CARGANDO VISTA INICIO \n");
+		System.out.println("CARGANDO VISTA INICIO \n");
+		System.out.println(theHolders);
 		theHolders.cargarVistaSimple(texto);
 
 	}

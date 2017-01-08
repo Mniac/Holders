@@ -36,20 +36,18 @@ public class TheHolders extends Activity {
             historiasPendientes.add(titulo);
         cargarHistorias();
 
-        System.out.println("ESTOU EJECUTANDOME MUY FUERTE");
+
 		iniciarJuego();
 		finish();
 	}
 
 	public void addHistoria(String titulo) {
-		Historia aux = new Historia(titulo,this);
 		try {
-			aux = readHist(aux);
+			Historia aux = readHist(titulo);
+            historias.put(titulo, aux);
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
-
-		historias.put(titulo, aux);
 	}
 	public void cargarHistorias() {
 		for (String string : historiasPendientes) {
@@ -120,18 +118,18 @@ public class TheHolders extends Activity {
 		modoSurvive= survival;
 	}
 
-	private Historia readHist(Historia h) throws IOException, ClassNotFoundException {
-        System.out.println(h.getTitulo()+".holder");
+	private Historia readHist(String titulo) throws IOException, ClassNotFoundException {
+        System.out.println(titulo+".holder");
 		//Creamos un fujo de entrada a disco, pasándole el nombre del archivo en disco o un objeto de la clase File.
 
-		FileInputStream fileIn= TheHolders.this.openFileInput(h.getTitulo()+".holder");
+		FileInputStream fileIn= TheHolders.this.openFileInput(titulo+".holder");
 
 		//El fujo de entrada ObjectInputStream es el que procesa los datos y se ha de vincular a un objeto fileIn de la clase FileInputStream.
 		ObjectInputStream entrada= new ObjectInputStream(fileIn);
 
 		//El método readObject lee los objetos del flujo de entrada, en el mismo orden en el que ha sido escritos.
 		Historia aux = (Historia) entrada.readObject();
-
+        aux.setTheHolders(this);
 		//Finalmente, se cierra los flujos
 		/*
 		entrada.close();

@@ -44,7 +44,7 @@
             <Button
                 android:text="@string/accept"
                 android:textColor="#ffffff"
-                android:id="@+id/btnOp1"
+                android:id="@+id/btnOp3"
                 android:background="@drawable/buttonbackground"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"

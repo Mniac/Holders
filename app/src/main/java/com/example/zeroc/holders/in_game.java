@@ -2,6 +2,8 @@ package com.example.zeroc.holders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -23,6 +25,16 @@ public class in_game extends MainActivity {
         System.out.println();
         textView4.setText(data.getExtras().get("texto").toString());
         System.out.println();
+
+        Button btnAceptar = (Button) this.findViewById( R.id.btnOp3 );
+
+        btnAceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("PULSANDO BOTON");
+                finish();
+            }
+        });
 
     }
 
