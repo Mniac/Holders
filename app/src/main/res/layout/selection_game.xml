@@ -27,11 +27,11 @@
                 android:id="@+id/textView4"
                 android:layout_weight="1"
                 android:gravity="center"
-                tools:text="En cualquier ciudad, en cualquier país, ve a cualquier institución mental o centro de reinserción social donde puedas ir por ti mismo. Cuando llegues al escritorio principal, pregunta por visitar a aquel que se hace llamar The Holder of the End. "
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="20dp"
-                android:textSize="18sp" />
+                android:textSize="26sp"
+                android:textColor="@android:color/background_light" />
         </LinearLayout>
 
         <LinearLayout
