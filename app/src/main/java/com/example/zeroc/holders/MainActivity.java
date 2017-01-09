@@ -50,15 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-        puntuaciones.add(new Puntuacion("pepe",1));
-        puntuaciones.add(new Puntuacion(nombre,2));
-        puntuaciones.add(new Puntuacion(nombre,3));
-        puntuaciones.add(new Puntuacion(nombre,4));
-        puntuaciones.add(new Puntuacion(nombre,5));
-        puntuaciones.add(new Puntuacion(nombre,6));
-        puntuaciones.add(new Puntuacion(nombre,7));
-        puntuaciones.add(new Puntuacion(nombre,8));
-        System.out.println(puntuaciones.toString());
+        puntuaciones.add(new Puntuacion("Jose",1));
+        puntuaciones.add(new Puntuacion("Baltasar",2));
+        puntuaciones.add(new Puntuacion("Melchor",3));
+        puntuaciones.add(new Puntuacion("Dabaixo",4));
+        puntuaciones.add(new Puntuacion("Vilares",5));
+        puntuaciones.add(new Puntuacion("Nani",6));
+        puntuaciones.add(new Puntuacion("Lourdes",7));
+        puntuaciones.add(new Puntuacion("Gaspar",8));
 
         Button btCont = (Button) this.findViewById( R.id.btnMain1 );
         Button btNew = (Button) this.findViewById( R.id.btnMain2 );
@@ -69,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences prefs = MainActivity.this.getSharedPreferences("opciones", Context.MODE_PRIVATE );
                 modoSurvive = prefs.getBoolean("modo",false);
-                System.out.println("Cargando en modo: "+modoSurvive);
                 pendientes = prefs.getString("pendientes",pendientes);
-                System.out.println("String pendientes = "+pendientes);
 
                 System.out.println("CONTINUAR JUEGO()");
                 iniciarJuego();
@@ -83,12 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
                 SharedPreferences prefs = MainActivity.this.getSharedPreferences("opciones", Context.MODE_PRIVATE );
                 modoSurvive = prefs.getBoolean("modo",false);
-                System.out.println("Cargando en modo: "+modoSurvive);
                 pendientes = "";
                 for (int i = 0; i < titulos.length ; i++) {
                     pendientes = pendientes + i;
                 }
-                System.out.println("String pendientes = "+pendientes);
 
                 System.out.println("INICIAR JUEGO()");
                 iniciarJuego();
@@ -108,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent subActividad = new Intent( MainActivity.this, vista_puntuaciones.class );
                 subActividad.putExtra("puntuaciones",toArrayString(puntuaciones));
-                System.out.println("ANTES");
-                System.out.println(puntuaciones.toString());
                 MainActivity.this.startActivityForResult( subActividad, REQUEST_CODE );
             }
         });
@@ -153,10 +146,7 @@ public class MainActivity extends AppCompatActivity {
     public void iniciarJuego() {
         if(!pendientes.equals("")){
 
-            System.out.println("INDICE: "+(int)(Math.random()*pendientes.length()-1));
-            System.out.println(pendientes.toCharArray());
             numHistoriaActual = Integer.parseInt(""+pendientes.toCharArray()[(int)(Math.random()*pendientes.length())]);
-            System.out.println("ROMPE DESPUES DEL RANDOM");
             addHistoria(titulos[numHistoriaActual]);
             start();
             //JOptionPane.showMessageDialog(null, "Tienes "+(titulos.length-historiasPendientes.size())+" Holders de "+titulos.length+", nunca deben ser reunidos.");
@@ -168,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Historia readHist(String titulo) throws IOException, ClassNotFoundException {
-        System.out.println("\tCargando: "+titulo+".holder");
+        //System.out.println("\tCargando: "+titulo+".holder");
         //Creamos un fujo de entrada a disco, pasándole el nombre del archivo en disco o un objeto de la clase File.
 
         FileInputStream fileIn= this.openFileInput(titulo+".holder");
@@ -243,10 +233,10 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString("pendientes",pendientesDespues);
                         System.out.println(pendientes+" replace("+numHistoriaActual+")-> "+pendientesDespues);
                         pendientes = prefs.getString("pendientes",pendientes);
-                        System.out.println("guardado: "+pendientes);
+                        //.out.println("guardado: "+pendientes);
                         editor.apply();
                     }
-                    System.out.println(modoSurvive + "  -  "+hActual.fin );
+                    //System.out.println(modoSurvive + "  -  "+hActual.fin );
                     if(modoSurvive && hActual.fin.equals("muerto")) {
                         SharedPreferences prefs = this.getSharedPreferences("opciones", Context.MODE_PRIVATE );
                         SharedPreferences.Editor editor = prefs.edit();
@@ -255,12 +245,13 @@ public class MainActivity extends AppCompatActivity {
                             aux = aux + i;
                         }
                         editor.putString("pendientes",aux);
-                        System.out.println("Reiniciando pendientes: "+aux);
+                       // System.out.println("Reiniciando pendientes: "+aux);
                         editor.apply();
                         puntuaciones.add(new Puntuacion(nombre, titulos.length-pendientes.length()));
+                        System.out.println("Insertando Puntuacion: "+puntuaciones.get(puntuaciones.size()-1));
                     }
 
-                    String text = " \nTienes "+(titulos.length-pendientes.length()+1)+" Holders de "+titulos.length+", nunca deben ser reunidos.";
+                    String text = " \nTienes "+(titulos.length-pendientes.length())+" Holders de "+titulos.length+", nunca deben ser reunidos.";
                     cargarVistaSimple(text,6);
                    break;
             }

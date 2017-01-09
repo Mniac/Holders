@@ -8,4 +8,5 @@
     <string name="accept">Aceptar</string>
     <string name="orNombre">Ordenar por nombre</string>
     <string name="orFecha">Ordenar por fecha</string>
+    <string name="orPuntos">Ordenar por Holders</string>
 </resources>

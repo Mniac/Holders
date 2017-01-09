@@ -2,4 +2,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/orNombre" android:id="@+id/opNombre" />
     <item android:title="@string/orFecha" android:id="@+id/opFecha" />
+    <item android:title="@string/orPuntos" android:id="@+id/opPuntos" />
 </menu>

@@ -17,7 +17,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".in_game" />
-        <activity android:name=".vista_puntuaciones" />
+        <activity
+            android:theme="@style/AppTheme"
+            android:name=".vista_puntuaciones" />
         <activity android:name=".options_menu" />
         <activity android:name=".selection_game" />
         <activity android:name=".Instalador" />

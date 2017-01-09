@@ -13,7 +13,6 @@
         android:background="@drawable/optionsbackground">
 
         <TextView
-            android:text="hola a todos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/textView5"

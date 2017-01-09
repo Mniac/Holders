@@ -28,8 +28,7 @@ public class vista_puntuaciones extends MainActivity {
         puntuaciones = toPuntuacionList(getIntent().getExtras().getStringArrayList("puntuaciones"));
         textView = (TextView) this.findViewById(R.id.textView5);
         textView.setText(puntuacionToString());
-        System.out.println("DENTRO XA");
-        System.out.println(puntuaciones.toString());
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -49,6 +48,10 @@ public class vista_puntuaciones extends MainActivity {
                 ordenarPorFecha();
                 toret = true;
                 break;
+            case R.id.opPuntos:
+                ordenarPorPuntos();
+                toret = true;
+                break;
         }
         return toret;
     }
@@ -60,29 +63,44 @@ public class vista_puntuaciones extends MainActivity {
         return toret;
     }
 
-    private String puntuacionToString() {
+    public String puntuacionToString() {
         StringBuilder toret = new StringBuilder();
         toret.append("Nombre --- Fecha --- Puntuación\n\n");
         for (Puntuacion actual : puntuaciones) {
             toret.append(actual.toString()+"\n\n");
         }
-
+        System.out.println(toret.toString());
         return toret.toString();
     }
     public void ordenarPorFecha(){
+        System.out.println("Ordenado por fesha");
         Collections.sort(puntuaciones, new Comparator<Puntuacion>(){
             public int compare(Puntuacion object1, Puntuacion object2) {
                 return object1.getFecha().compareTo(object2.getFecha());
             }
         });
+        textView.setText(puntuacionToString());
     }
 
     public void ordenarPorNombre(){
-
+        System.out.println("Ordenado por nombre");
         Collections.sort(puntuaciones, new Comparator<Puntuacion>(){
             public int compare(Puntuacion object1, Puntuacion object2) {
                 return object1.getNombre().compareTo(object2.getNombre());
             }
         });
+
+        textView.setText(puntuacionToString());
+    }
+
+    public void ordenarPorPuntos(){
+        System.out.println("Ordenado por puntos");
+        Collections.sort(puntuaciones, new Comparator<Puntuacion>(){
+            public int compare(Puntuacion object1, Puntuacion object2) {
+                return object1.getHoldersConseguidos()-object2.getHoldersConseguidos();
+            }
+        });
+
+        textView.setText(puntuacionToString());
     }
 }
