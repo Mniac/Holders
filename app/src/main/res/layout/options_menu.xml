@@ -59,7 +59,8 @@
                         android:gravity="center"
                         android:textSize="30sp"
                         android:textColor="@android:color/background_light"
-                        android:textColorLink="@android:color/holo_orange_dark"/>
+                        android:theme="@style/SCBSwitch"
+                        android:checked="true" />
 
                 </LinearLayout>
 
@@ -92,7 +93,9 @@
                     android:gravity="center"
                     android:textColor="@android:color/background_light"
                     android:textColorLink="?android:attr/actionMenuTextColor"
-                    android:textColorHighlight="@android:color/background_light" />
+                    android:textColorHighlight="@android:color/background_light"
+                    android:hint="Underline color change"
+                    android:backgroundTint="#FF9C1E19"/>
 
             </LinearLayout>
         </LinearLayout>
