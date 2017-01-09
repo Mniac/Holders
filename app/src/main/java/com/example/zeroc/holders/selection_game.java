@@ -32,15 +32,16 @@ public class selection_game extends Activity {
         btnOp1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("PULSANDO BOTON1");
+                //System.out.println("PULSANDO BOTON -> \tresult 1");
                 setResult(1);
                 finish();
+
             }
         });
         btnOp2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("PULSANDO BOTON2");
+               // System.out.println("PULSANDO BOTON -> \tResult 2");
                 setResult(2);
                 finish();
             }
