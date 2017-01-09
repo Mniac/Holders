@@ -22,8 +22,8 @@ public class vista_puntuaciones extends MainActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-// Indica el layout para esta actividad.
-// El archivo de layout se guarda en res/layout/layout_actividad2.xml
+        // Indica el layout para esta actividad.
+        // El archivo de layout se guarda en res/layout/layout_actividad2.xml
         this.setContentView(R.layout.vista_puntuaciones);
         puntuaciones = toPuntuacionList(getIntent().getExtras().getStringArrayList("puntuaciones"));
         textView = (TextView) this.findViewById(R.id.textView5);
@@ -62,9 +62,11 @@ public class vista_puntuaciones extends MainActivity {
 
     private String puntuacionToString() {
         StringBuilder toret = new StringBuilder();
+        toret.append("Nombre --- Fecha --- Puntuación\n\n");
         for (Puntuacion actual : puntuaciones) {
-            toret.append(actual.toString()+"\n");
+            toret.append(actual.toString()+"\n\n");
         }
+
         return toret.toString();
     }
     public void ordenarPorFecha(){

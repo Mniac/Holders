@@ -52,7 +52,7 @@ public class Puntuacion {
 	@Override
 	public String toString() {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		return nombre+"\t"+format.format(fecha)+"\t"+holdersConseguidos;
+		return nombre+" --- "+format.format(fecha)+" --- "+holdersConseguidos;
 	}
 	public String formaString(){
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
