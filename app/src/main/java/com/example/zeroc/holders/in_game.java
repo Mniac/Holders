@@ -40,6 +40,9 @@ public class in_game extends MainActivity {
                     case 5:
                         setResult(((int) (Math.random()*2))+1);
                         break;
+                    case 6:
+                        setResult(0);
+                        break;
                    default: setResult(1);//System.out.println("\tresult 1");
                        break;
                 }

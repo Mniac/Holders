@@ -20,8 +20,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static String[] titulos= {"The Holder of the Ambition","The Holder of the End","The Holder of the Present","The Holder of the Rage"};
-    private HashMap<String,Historia> historias = new HashMap<>();
-    private ArrayList<String> historiasPendientes = new ArrayList<>();
     private String pendientes;
     private boolean modoSurvive;
     private List<Puntuacion> puntuaciones = new ArrayList<>();
@@ -30,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Historia hActual;
     private Bloque actual;
     private boolean iniciado;
+    private char[] pendientesArray;
     private int numHistoriaActual;
 
     @Override
@@ -37,17 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences prefs = this.getPreferences( Context.MODE_PRIVATE );
+        SharedPreferences prefs = this.getSharedPreferences("opciones", Context.MODE_PRIVATE );
         boolean install = prefs.getBoolean("instalado",false);
-        modoSurvive = prefs.getBoolean("modo",false);
-        pendientes= "0321";
-        pendientes= prefs.getString("pendientes",pendientes);
-
-        System.out.println("String pendientes = "+pendientes);
-        for (char c : pendientes.toCharArray()) {
-            //System.out.println("Agregando "+titulos[Integer.parseInt(""+c)]);
-            historiasPendientes.add(titulos[Integer.parseInt(""+c)]);
-        }
+        nombre = prefs.getString("nombre","player");
 
         //System.out.println("modo ->"+ modoSurvive);
         if(!install){
@@ -56,17 +47,49 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean("instalado",true);
             editor.apply();
-        }
 
+
+        }
+        puntuaciones.add(new Puntuacion("pepe",1));
+        puntuaciones.add(new Puntuacion(nombre,2));
+        puntuaciones.add(new Puntuacion(nombre,3));
+        puntuaciones.add(new Puntuacion(nombre,4));
+        puntuaciones.add(new Puntuacion(nombre,5));
+        puntuaciones.add(new Puntuacion(nombre,6));
+        puntuaciones.add(new Puntuacion(nombre,7));
+        puntuaciones.add(new Puntuacion(nombre,8));
+        System.out.println(puntuaciones.toString());
+
+        Button btCont = (Button) this.findViewById( R.id.btnMain1 );
         Button btNew = (Button) this.findViewById( R.id.btnMain2 );
         Button btOptions = (Button) this.findViewById( R.id.btnMain3 );
         Button btPoints = (Button) this.findViewById( R.id.btnMain4 );
+        btCont.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                SharedPreferences prefs = MainActivity.this.getSharedPreferences("opciones", Context.MODE_PRIVATE );
+                modoSurvive = prefs.getBoolean("modo",false);
+                System.out.println("Cargando en modo: "+modoSurvive);
+                pendientes = prefs.getString("pendientes",pendientes);
+                System.out.println("String pendientes = "+pendientes);
+
+                System.out.println("CONTINUAR JUEGO()");
+                iniciarJuego();
+            }
+        });
         btNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                System.out.println("CARGAR HISTORIAS()");
-                cargarHistorias();
+                SharedPreferences prefs = MainActivity.this.getSharedPreferences("opciones", Context.MODE_PRIVATE );
+                modoSurvive = prefs.getBoolean("modo",false);
+                System.out.println("Cargando en modo: "+modoSurvive);
+                pendientes = "";
+                for (int i = 0; i < titulos.length ; i++) {
+                    pendientes = pendientes + i;
+                }
+                System.out.println("String pendientes = "+pendientes);
+
                 System.out.println("INICIAR JUEGO()");
                 iniciarJuego();
             }
@@ -84,29 +107,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent subActividad = new Intent( MainActivity.this, vista_puntuaciones.class );
+                subActividad.putExtra("puntuaciones",toArrayString(puntuaciones));
+                System.out.println("ANTES");
+                System.out.println(puntuaciones.toString());
                 MainActivity.this.startActivityForResult( subActividad, REQUEST_CODE );
             }
         });
     }
 
-    public void cargarHistorias() {
-        for (String string : historiasPendientes)
-            addHistoria(string);
-    }
+
 
     public void addHistoria(String titulo) {
         try {
-            Historia aux = readHist(titulo);
-            historias.put(titulo, aux);
+             hActual = readHist(titulo);
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
     }
 
     public void start(){
-        numHistoriaActual = (int) (Math.random()*historiasPendientes.size());
-        System.out.println(numHistoriaActual);
-        hActual = historias.get(historiasPendientes.get(numHistoriaActual));
         System.out.println("\tIniciando Historia " + hActual.titulo);
         iniciado = false;
         hActual.fin = "vivo";
@@ -132,32 +151,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void iniciarJuego() {
-        if(!historiasPendientes.isEmpty()){
+        if(!pendientes.equals("")){
+
+            System.out.println("INDICE: "+(int)(Math.random()*pendientes.length()-1));
+            System.out.println(pendientes.toCharArray());
+            numHistoriaActual = Integer.parseInt(""+pendientes.toCharArray()[(int)(Math.random()*pendientes.length())]);
+            System.out.println("ROMPE DESPUES DEL RANDOM");
+            addHistoria(titulos[numHistoriaActual]);
             start();
             //JOptionPane.showMessageDialog(null, "Tienes "+(titulos.length-historiasPendientes.size())+" Holders de "+titulos.length+", nunca deben ser reunidos.");
+        }else{
+            puntuaciones.add(new Puntuacion(nombre, titulos.length-pendientes.length()));
+            cargarVistaSimple("Has Ganado",6);
         }
-        puntuaciones.add(new Puntuacion(nombre, titulos.length-historiasPendientes.size()));
-    }
 
-    public void ordenarPorFecha(){
-        Collections.sort(puntuaciones, new Comparator<Puntuacion>(){
-            public int compare(Puntuacion object1, Puntuacion object2) {
-                return object1.getFecha().compareTo(object2.getFecha());
-            }
-        });
-    }
-
-    public void ordenarPorNombre(){
-
-        Collections.sort(puntuaciones, new Comparator<Puntuacion>(){
-            public int compare(Puntuacion object1, Puntuacion object2) {
-                return object1.getNombre().compareTo(object2.getNombre());
-            }
-        });
-    }
-
-    private void setSurvive(boolean survival) {
-        modoSurvive= survival;
     }
 
     private Historia readHist(String titulo) throws IOException, ClassNotFoundException {
@@ -228,13 +235,33 @@ public class MainActivity extends AppCompatActivity {
                     ejecutar(hActual);
                     break;
                 case 4:
-                    SharedPreferences prefs = this.getPreferences( Context.MODE_PRIVATE );
-                    SharedPreferences.Editor editor = prefs.edit();
-                    String pendientesDespues = pendientes.replace(""+numHistoriaActual,"");
-                    editor.putString("pendientes",pendientesDespues);
 
-                    System.out.println(pendientes+" replace("+numHistoriaActual+")-> "+pendientesDespues);
-                    editor.apply();
+                    if(hActual.fin.equals("vivo")) {
+                        SharedPreferences prefs = this.getSharedPreferences("opciones", Context.MODE_PRIVATE );
+                        SharedPreferences.Editor editor = prefs.edit();
+                        String pendientesDespues = pendientes.replace(""+numHistoriaActual,"");
+                        editor.putString("pendientes",pendientesDespues);
+                        System.out.println(pendientes+" replace("+numHistoriaActual+")-> "+pendientesDespues);
+                        pendientes = prefs.getString("pendientes",pendientes);
+                        System.out.println("guardado: "+pendientes);
+                        editor.apply();
+                    }
+                    System.out.println(modoSurvive + "  -  "+hActual.fin );
+                    if(modoSurvive && hActual.fin.equals("muerto")) {
+                        SharedPreferences prefs = this.getSharedPreferences("opciones", Context.MODE_PRIVATE );
+                        SharedPreferences.Editor editor = prefs.edit();
+                        String aux = "";
+                        for (int i = 0; i < titulos.length ; i++) {
+                            aux = aux + i;
+                        }
+                        editor.putString("pendientes",aux);
+                        System.out.println("Reiniciando pendientes: "+aux);
+                        editor.apply();
+                        puntuaciones.add(new Puntuacion(nombre, titulos.length-pendientes.length()));
+                    }
+
+                    String text = " \nTienes "+(titulos.length-pendientes.length()+1)+" Holders de "+titulos.length+", nunca deben ser reunidos.";
+                    cargarVistaSimple(text,6);
                    break;
             }
         }
@@ -254,16 +281,15 @@ public class MainActivity extends AppCompatActivity {
                 ejecutar(actual);
             else{
                 System.out.println("\tFIN Historia " + h.titulo);
-                String text = " \nTienes "+(titulos.length-historiasPendientes.size())+" Holders de "+titulos.length+", nunca deben ser reunidos.";
                 switch (h.fin) {
                     case "vivo":
-                        cargarVistaSimple("Has conseguido el Holder"+text,2);
+                        cargarVistaSimple("Has conseguido el Holder",2);
                         break;
                     case "muerto":
-                        cargarVistaSimple("Has muerto"+text,2);
+                        cargarVistaSimple("Has muerto",2);
                         break;
                     case "huye":
-                        cargarVistaSimple("Has huido"+text,2);
+                        cargarVistaSimple("Has huido",2);
                         break;
                 }
             }
@@ -287,5 +313,12 @@ public class MainActivity extends AppCompatActivity {
                 System.err.println("tipo de bloque erroneo");
                 break;
         }
+    }
+    private ArrayList<String> toArrayString(List<Puntuacion> puntuaciones){
+        ArrayList<String> toret = new ArrayList<>();
+        for (Puntuacion actual : puntuaciones) {
+            toret.add(actual.formaString());
+        }
+        return toret;
     }
 }

@@ -1,4 +1,6 @@
 package com.example.zeroc.holders;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Puntuacion {
@@ -13,6 +15,26 @@ public class Puntuacion {
 		this.nombre = nombre;
 		this.fecha = new Date();
 		this.holdersConseguidos = holdersConseguidos;
+	}
+	public Puntuacion(String str){
+		String strV[] = {"","",""};
+		int i = 0;
+
+		for (char c : str.toCharArray()) {
+			if(c == '-')
+				i++;
+			else
+				strV[i]= strV[i]+c;
+		}
+		this.nombre = strV[0];
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		format.toPattern();
+		try {
+			this.fecha = format.parse(strV[1]);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.holdersConseguidos = Integer.parseInt(strV[2]);
 	}
 	
 	public String getNombre() {
@@ -29,11 +51,18 @@ public class Puntuacion {
 	}
 	@Override
 	public String toString() {
-		return nombre+"\t"+fecha.toString()+"\t"+holdersConseguidos;
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		return nombre+"\t"+format.format(fecha)+"\t"+holdersConseguidos;
+	}
+	public String formaString(){
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		return nombre+"-"+format.format(fecha)+"-"+holdersConseguidos;
 	}
 	public void setHoldersConseguidos(int holdersConseguidos) {
 		this.holdersConseguidos = holdersConseguidos;
 	}
-	
-	
+
+
+
+
 }
