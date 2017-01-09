@@ -11,9 +11,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -28,8 +25,11 @@ public class MainActivity extends AppCompatActivity {
     private Historia hActual;
     private Bloque actual;
     private boolean iniciado;
-    private char[] pendientesArray;
     private int numHistoriaActual;
+    private Button btCont;
+    private Button btNew;
+    private Button btOptions;
+    private Button btPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +59,30 @@ public class MainActivity extends AppCompatActivity {
         puntuaciones.add(new Puntuacion("Lourdes",7));
         puntuaciones.add(new Puntuacion("Gaspar",8));
 
-        Button btCont = (Button) this.findViewById( R.id.btnMain1 );
-        Button btNew = (Button) this.findViewById( R.id.btnMain2 );
-        Button btOptions = (Button) this.findViewById( R.id.btnMain3 );
-        Button btPoints = (Button) this.findViewById( R.id.btnMain4 );
+        btCont = (Button) this.findViewById( R.id.btnMain1 );
+        btNew = (Button) this.findViewById( R.id.btnMain2 );
+        btOptions = (Button) this.findViewById( R.id.btnMain3 );
+        btPoints = (Button) this.findViewById( R.id.btnMain4 );
+        pendientes = "";
+        for (int i = 0; i < titulos.length ; i++) {
+            pendientes = pendientes + i;
+        }
+
+        pendientes = prefs.getString("pendientes",pendientes);
+        System.out.println("pendientes: "+pendientes);
+        if(pendientes.length() == 4){
+            btCont.setEnabled(false);
+            btCont.setText(" ----> ");
+            btNew.setEnabled(true);
+            btNew.setText("Nuevo Juego");
+        }else{
+            btNew.setEnabled(false);
+            btNew.setText(" <---- ");
+            btCont.setEnabled(true);
+            btCont.setText("Continuar");
+        }
+
+
         btCont.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -151,7 +171,12 @@ public class MainActivity extends AppCompatActivity {
             start();
             //JOptionPane.showMessageDialog(null, "Tienes "+(titulos.length-historiasPendientes.size())+" Holders de "+titulos.length+", nunca deben ser reunidos.");
         }else{
-            puntuaciones.add(new Puntuacion(nombre, titulos.length-pendientes.length()));
+            if(modoSurvive)
+                puntuaciones.add(new Puntuacion(nombre, titulos.length-pendientes.length()));
+            pendientes = "";
+            for (int i = 0; i < titulos.length ; i++) {
+                pendientes = pendientes + i;
+            }
             cargarVistaSimple("Has Ganado",6);
         }
 
@@ -232,8 +257,7 @@ public class MainActivity extends AppCompatActivity {
                         String pendientesDespues = pendientes.replace(""+numHistoriaActual,"");
                         editor.putString("pendientes",pendientesDespues);
                         System.out.println(pendientes+" replace("+numHistoriaActual+")-> "+pendientesDespues);
-                        pendientes = prefs.getString("pendientes",pendientes);
-                        //.out.println("guardado: "+pendientes);
+                        pendientes = pendientesDespues;
                         editor.apply();
                     }
                     //System.out.println(modoSurvive + "  -  "+hActual.fin );
@@ -250,10 +274,20 @@ public class MainActivity extends AppCompatActivity {
                         puntuaciones.add(new Puntuacion(nombre, titulos.length-pendientes.length()));
                         System.out.println("Insertando Puntuacion: "+puntuaciones.get(puntuaciones.size()-1));
                     }
-
-                    String text = " \nTienes "+(titulos.length-pendientes.length())+" Holders de "+titulos.length+", nunca deben ser reunidos.";
+                    String text = " \nTienes "+(titulos.length - pendientes.length())+" Holders de "+titulos.length+", nunca deben ser reunidos.";
                     cargarVistaSimple(text,6);
-                   break;
+                    break;
+            }
+            if(pendientes.length() == 4){
+                btCont.setEnabled(false);
+                btCont.setText(" ----> ");
+                btNew.setEnabled(true);
+                btNew.setText("Nuevo Juego");
+            }else{
+                btNew.setEnabled(false);
+                btNew.setText(" <---- ");
+                btCont.setEnabled(true);
+                btCont.setText("Continuar");
             }
         }
     }

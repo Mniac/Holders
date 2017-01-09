@@ -69,11 +69,11 @@ public class vista_puntuaciones extends MainActivity {
         for (Puntuacion actual : puntuaciones) {
             toret.append(actual.toString()+"\n\n");
         }
-        System.out.println(toret.toString());
+        //System.out.println(toret.toString());
         return toret.toString();
     }
     public void ordenarPorFecha(){
-        System.out.println("Ordenado por fesha");
+        //System.out.println("Ordenado por fesha");
         Collections.sort(puntuaciones, new Comparator<Puntuacion>(){
             public int compare(Puntuacion object1, Puntuacion object2) {
                 return object1.getFecha().compareTo(object2.getFecha());
@@ -83,7 +83,7 @@ public class vista_puntuaciones extends MainActivity {
     }
 
     public void ordenarPorNombre(){
-        System.out.println("Ordenado por nombre");
+        //System.out.println("Ordenado por nombre");
         Collections.sort(puntuaciones, new Comparator<Puntuacion>(){
             public int compare(Puntuacion object1, Puntuacion object2) {
                 return object1.getNombre().compareTo(object2.getNombre());
@@ -94,7 +94,7 @@ public class vista_puntuaciones extends MainActivity {
     }
 
     public void ordenarPorPuntos(){
-        System.out.println("Ordenado por puntos");
+        //System.out.println("Ordenado por puntos");
         Collections.sort(puntuaciones, new Comparator<Puntuacion>(){
             public int compare(Puntuacion object1, Puntuacion object2) {
                 return object1.getHoldersConseguidos()-object2.getHoldersConseguidos();
