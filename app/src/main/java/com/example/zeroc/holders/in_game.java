@@ -20,14 +20,29 @@ public class in_game extends MainActivity {
 
         Intent data = this.getIntent();
         TextView textView4 = (TextView) findViewById(R.id.textView);
-        textView4.setText((String)data.getExtras().get("texto"));
+        textView4.setText(data.getExtras().getString("texto"));
+        final int inicio = data.getExtras().getInt("inicio");
 
         Button btnAceptar = (Button) this.findViewById( R.id.btnOp3 );
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("PULSANDO BOTON");
-                setResult(1);
+                //System.out.print("PULSANDO BOTON ->");
+                switch (inicio) {
+                    case 1:
+                        //System.out.println("\tresult 3");
+                        setResult(3);
+                        break;
+                    case 2:
+                        //System.out.println("\tresult 4");
+                        setResult(4);
+                        break;
+                    case 5:
+                        setResult(((int) (Math.random()*2))+1);
+                        break;
+                   default: setResult(1);//System.out.println("\tresult 1");
+                       break;
+                }
 
 
                 finish();
