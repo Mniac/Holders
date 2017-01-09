@@ -264,11 +264,11 @@ public class MainActivity extends AppCompatActivity {
                     if(modoSurvive && hActual.fin.equals("muerto")) {
                         SharedPreferences prefs = this.getSharedPreferences("opciones", Context.MODE_PRIVATE );
                         SharedPreferences.Editor editor = prefs.edit();
-                        String aux = "";
+                        pendientes = "";
                         for (int i = 0; i < titulos.length ; i++) {
-                            aux = aux + i;
+                            pendientes = pendientes + i;
                         }
-                        editor.putString("pendientes",aux);
+                        editor.putString("pendientes",pendientes);
                        // System.out.println("Reiniciando pendientes: "+aux);
                         editor.apply();
                         puntuaciones.add(new Puntuacion(nombre, titulos.length-pendientes.length()));
