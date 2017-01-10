@@ -50,14 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-        puntuaciones.add(new Puntuacion("Jose",1));
-        puntuaciones.add(new Puntuacion("Baltasar",2));
-        puntuaciones.add(new Puntuacion("Melchor",3));
-        puntuaciones.add(new Puntuacion("Dabaixo",4));
-        puntuaciones.add(new Puntuacion("Vilares",5));
-        puntuaciones.add(new Puntuacion("Nani",6));
-        puntuaciones.add(new Puntuacion("Lourdes",7));
-        puntuaciones.add(new Puntuacion("Gaspar",8));
 
         btCont = (Button) this.findViewById( R.id.btnMain1 );
         btNew = (Button) this.findViewById( R.id.btnMain2 );
@@ -140,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void start(){
         System.out.println("\tIniciando Historia " + hActual.titulo);
+        SharedPreferences prefs = this.getSharedPreferences("opciones", Context.MODE_PRIVATE );
+        nombre = prefs.getString("nombre","player");
         iniciado = false;
         hActual.fin = "vivo";
         actual = hActual.bloques.get(0);
@@ -258,12 +252,17 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString("pendientes",pendientesDespues);
                         System.out.println(pendientes+" replace("+numHistoriaActual+")-> "+pendientesDespues);
                         pendientes = pendientesDespues;
+                        String text = " \nTienes "+(titulos.length - pendientes.length())+" Holders de "+titulos.length+", nunca deben ser reunidos.";
                         editor.apply();
+                        cargarVistaSimple(text,6);
                     }
                     //System.out.println(modoSurvive + "  -  "+hActual.fin );
                     if(modoSurvive && hActual.fin.equals("muerto")) {
                         SharedPreferences prefs = this.getSharedPreferences("opciones", Context.MODE_PRIVATE );
                         SharedPreferences.Editor editor = prefs.edit();
+                        puntuaciones.add(new Puntuacion(nombre, titulos.length-pendientes.length()));
+                        System.out.println("Insertando Puntuacion: "+puntuaciones.get(puntuaciones.size()-1));
+                        String text = " \nTienes "+(titulos.length - pendientes.length())+" Holders de "+titulos.length+", nunca deben ser reunidos.";
                         pendientes = "";
                         for (int i = 0; i < titulos.length ; i++) {
                             pendientes = pendientes + i;
@@ -271,11 +270,9 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString("pendientes",pendientes);
                        // System.out.println("Reiniciando pendientes: "+aux);
                         editor.apply();
-                        puntuaciones.add(new Puntuacion(nombre, titulos.length-pendientes.length()));
-                        System.out.println("Insertando Puntuacion: "+puntuaciones.get(puntuaciones.size()-1));
+                        System.out.println(nombre);
+                        cargarVistaSimple(text,6);
                     }
-                    String text = " \nTienes "+(titulos.length - pendientes.length())+" Holders de "+titulos.length+", nunca deben ser reunidos.";
-                    cargarVistaSimple(text,6);
                     break;
             }
             if(pendientes.length() == 4){
